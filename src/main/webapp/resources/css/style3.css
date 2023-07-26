@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+body{font-family: 'Noto Sans KR', sans-serif;}
+::selection{background:#e7ab3c;color:#fff;}
+a{color:#000;}
+a:hover{color:#e7ab3c;transition:0.3s;}
+textarea{resize:none;}
+/* 유기동물 페이지 */
+#contents{width:1140px;margin:10px;}
+#contents h1{margin-bottom:10px;text-align: center;font-size:1.9em;width:100%;padding:30px 0;border-bottom:2px solid #e7ab3c;}
+li{list-style:none;}
+/* 유기동물 API LIST */
+#show ul{width:100%;align-items: stretch;display:table;}
+#show ul li {float:left;margin:20px;cursor:pointer;box-sizing: border-box;width:29%;border:1px solid #ddd;}
+#show ul li div{width:100%;height:300px;overflow: hidden;box-sizing:border-box;}
+#show ul li nav{text-align:left;margin-top:15px;height:100px;padding:10px;}
+#show ul li nav h3{font-size:0.95em;}
+#show ul li nav p{font-size:12px;line-height:20px;margin-top:10px;}
+#show ul li div img {height:100%;}
+#show ul li .product_img img{width:100%;height:auto;}
+/* PAGING */
+#paging {display: inline-block;}
+
+#paging a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  font-size: 22px;
+}
+
+#paging a.active {
+  background-color: #e7ab3c;
+  color: white;
+  border: 1px solid #e7ab3c;
+}
+#paging a:hover:not(.active) {background-color: #ddd;}
+/* 카테고리 */
+#aban_location {width:100%;border:1px solid #e0e0e0;box-sizing:border-box;display:flex;
+  justify-content: center;align-items: center;}
+#aban_location .tit {width:125px;background:#f8f8f8;float:left;padding:15px;}
+#aban_location #con{float:left;padding:10px;text-align:left;width:90%;}
+#aban_location #con input {margin-left:10px;}
+#aban_location #con label{margin-left:5px;}
+#searchshow{width:100%;border:1px solid #f8f8f8;display:flex;margin:50px 0;}
+#searchshow table {border-collapse: collapse;width:50%;margin-left:2%;border-left:none;border-right:none;}
+#searchshow table tr th{background:#eeeeee;padding:10px;width:30%;text-align:center;}
+#searchshow table tr td{padding:10px;color:#6d6d6d;width:70%;}
+#searchshow nav{width:48%;float:left;border-radius: 5px;overflow:hidden;}
+#searchshow nav img{width:100%;}
+
+/* 쇼핑몰 페이지 */
+/* 쇼핑몰 제품추가 페이지 */
+
+/* 쇼핑몰 상세페이지 */
+#contents #getproduct{width:100%;margin-top:100px;}
+#contents #getproduct .pro_title{width:100%;display:flex;}
+#contents #getproduct .pro_title #frm{width:100%;}
+#contents #getproduct .pro_title ul{width:100%;}
+#contents #getproduct .pro_title ul li {text-align:left;float: left;width:50%;}
+#contents #getproduct .pro_title ul li:nth-child(1){width:50%;}
+#contents #getproduct .pro_title ul li:nth-child(2){width:45%;padding-left:5%;}
+#contents #getproduct .pro_title ul li img{width:100%;}
+#contents #getproduct .pro_title ul li dt{float:left;}
+#contents #getproduct .pro_title ul li dd{color:#cdcdcd;margin-left:90px;font-size:13px;}
+#contents #getproduct .pro_title ul li div{padding:20px 0;border-bottom:1px solid #f0f1f2;width:100%;}
+#contents #getproduct .pro_title ul li dd strong{color:#000;font-size:1.925em;}
+#contents #getproduct .pro_title ul li select{width:100%;}
+#contents #getproduct .pro_title button{width:48%;}
+#contents #getproduct .pro_title button:last-child{margin-left:2%;}
+#contents #getproduct #pro_contentwrap{width:100%;margin-top:50px;}
+#contents #getproduct #pro_contentwrap ul {width:100%;padding:20px 0;border-bottom:2px solid black;display:flex;line-height:30px;border-top:1px solid #f0f1f2;}
+#contents #getproduct #pro_contentwrap ul li{float:left;width:25%;border-left:1px solid #f0f1f2;}
+#pro_contentwrap ul li:last-child{border-right:1px solid #f0f1f2;}
+#contents #getproduct #pro_contentwrap ul li a{font-size:20px;}
+#contents #getproduct #pro_contentwrap  #content{margin-top:50px;}
+#contents #pro_location{display:flex;position:relative;height:100px;}
+#contents #pro_location ul {width:100%;width:100%;}
+#contents #pro_location ul li{float: left;padding:5px 20px;cursor:pointer;}
+#contents #pro_location ul li a{font-size:13px;}
+#contents #pro_location ul li a:hover{color:#e7ab3c;text-decoration: underline;}
+#contents #pro_location ul li label{margin:0 10px;cursor:pointer;}
+#contents #pro_location ul li div {bottom:0;position:absolute;width:100%;left:0;text-align:left;display:none;font-size:13px;border-top:#e0e0e0 1px solid;border-bottom:#e0e0e0 1px solid;padding:20px;}
+#contents #pro_location ul li:first-child div{display:block;}
+#contents #pro_location ul li a.after{color:#e7ab3c;text-decoration: underline;}
+
+/* 결제폼 스타일 */
+#pay_wrap{width:100%;}
+#pay_wrap table{font-size:14px;border:none;width:100%;margin-top:30px;border-top:2px solid #989ba0;border-bottom:2px solid #989ba0;}
+#pay_wrap table thead{background:#f5f5f5;border:none;text-align:center;}
+#pay_wrap table td{border:1px solid #eaeaea;}
+#pay_wrap table thead tr th{padding:10px;font-weight:400;}
+#pay_wrap table tbody tr td{padding:10px;}
+#pay_wrap table tbody tr td nav{width:100px;height:100px;float:left;overflow:hidden;}
+#pay_wrap table tbody tr td nav img{width:100%;}
+#pay_wrap table tbody tr td strong{margin-left:20px;line-height:100px;}
+#pay_wrap h3{text-align:left;margin-top:30px;}
+#pay_wrap table tbody tr td .optionlist{position:relative;width:100%;height:35px;line-height:35px;}
+#pay_wrap table tbody tr td .optionlist input{line-height:24px;}
+#pay_wrap table tbody tr td .optionlist div{position:absolute;right:0;top:50%;transform:translateY(-50%);}
+#pay_wrap table tbody tr td div input{margin-right:10px;}
+#pay_wrap #pay {margin-top:50px;}
+#pay_wrap #add_wrap th{border-color:#eaeaea;text-align: center;}
+#pay_wrap #add_wrap{margin-top:0;padding:0;}
+#pay_wrap #add_wrap input{padding:5px;margin:5px 0;border:1px solid #d5d5d5;}
+#pay_wrap table tfoot tr td{padding:20px 10px;}
+/* 제품insert테이블 */
+#contents #pro_tb{width:95%;}
+#contents #pro_tb input, select{padding:5px;border:none;width:30%;border:1px solid #c3c3c3;}
+#contents #pro_tb th{width:15%;text-align:center;}
+#contents #pro_tb td{width:80%;position:relative;}
+#contents #pro_tb td #opbtn{position:absolute;right:0;top:5px;background:none;color:#c3c3c3;}
+#contents #pro_tb td #opbtn:hover{color:#e7ab3c}
+/* 제품옵션 */
+#contents #pro_show #proname{background:#fcfcfd;padding:10px;border:#d9dde2 1px solid;}
+/* 장바구니 */
+#wrap{width:100%;}
+#wrap table{font-size:14px;border:none;width:70%;margin-top:30px;border-top:2px solid #989ba0;border-bottom:2px solid #989ba0;}
+#wrap table thead{background:#f5f5f5;border:none;text-align:center;}
+#wrap table td{border:1px solid #eaeaea;}
+#wrap table thead tr th{padding:10px;font-weight:400;}
+#wrap table tbody tr td{padding:10px;position:relative;}
+#wrap table tbody tr td nav{width:100px;height:100px;float:left;overflow:hidden;}
+#wrap table tbody tr td img{width:100px; height: 100px;}
+#wrap table tbody tr td strong{margin-left:20px;line-height:100px;}
+#wrap h3{text-align:left;margin-top:30px;}
+#wrap table tbody tr td div{position:absolute;right:10px;top:50%;transform:translateY(-50%);}
+#wrap table tbody tr td div input{margin-right:10px;}
+#wrap #pay {margin-top:20px;}
+#wrap #pay #add_wrap{margin-top:0;padding:0;}
+#totalDelete{margin-top : 20px; margin-left: -60%}
+/* 버튼 스타일 */
+#paybtnwrap{margin-top:20px;}
+#paybtnwrap button {padding:10px; width:220px; border:none; border-radius:5px;margin:5px;background:#ededed;}
+#paybtnwrap button:hover{background:#e5e5e5;transition:0.5s;}
+#paybtnwrap button:nth-child(1) {background:#e7ab3c;color:#fff;}
+#paybtnwrap button:nth-child(1):hover{background:#e39f20;}

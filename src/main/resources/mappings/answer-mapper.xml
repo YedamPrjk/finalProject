@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.answer.service.impl.AnswerMapper">
+	<!-- 답변 등록 -->
+	<insert id="insertAnswer">
+		INSERT INTO ANSWER(
+		ANSWERNUMBER,
+		WRITER,
+		CONTENT,
+		CALENDAR,
+		MEMBERID,
+		QUESTIONNUMBER)
+		VALUES(
+		(SELECT
+		NVL(MAX(ANSWERNUMBER),0)+1 FROM ANSWER),
+		#{writer},
+		#{content},
+		SYSDATE,
+		#{memberId},
+		#{questionNumber}
+		)
+	</insert>
+	<!-- 답변 수정 -->
+	<update id="updateAnswer">
+		UPDATE ANSWER
+		<set> CONTENT = #{content}
+		</set>
+		<where>ANSWERNUMBER = #{answerNumber}</where>
+	</update>
+	<!-- 답변 삭제 -->
+	<delete id="deleteAnswer">
+		DELETE FROM ANSWER
+		<where>ANSWERNUMBER = #{answerNumber}</where>
+	</delete>
+	<!-- 특정 답변 조회 -->
+	<select id="getAnswer" resultType="answerVO">
+		SELECT * FROM ANSWER
+		<where>ANSWERNUMBER = #{answerNumber}
+		</where>
+		ORDER BY ANSWERNUMBER
+	</select>
+	<!-- 답변 전체 조회 -->
+	<select id="getSearchAnswer" resultType="answerVO">
+		SELECT * FROM ANSWER
+		WHERE WRITER =#{writer}
+		ORDER BY ANSWERNUMBER
+	</select>
+	
+	<!-- 마이페이지-유저-답변 받은 내역 -->
+	<select id="getUserAnswer" resultType="answerVO">
+		SELECT * FROM ANSWER
+		WHERE MEMBERID = #{memberId}
+	</select>
+	
+<!-- 김찬영김찬영김찬영김찬영김찬영김찬영김찬영김찬영김찬영김찬영김찬영김찬영김찬영김찬영 -->
+	
+	
+	
+	<!-- 관리자가  신고하기답장에 사용  -->
+	<insert id="insertAnswer1Cr4"
+										parameterType="answerVO"		>	
+			INSERT INTO ANSWER(
+		ANSWERNUMBER,
+		WRITER,
+		CONTENT,
+		CALENDAR,
+		MEMBERID,
+		QUESTIONNUMBER)
+		VALUES(
+		(SELECT
+		NVL(MAX(ANSWERNUMBER),0)+1 FROM ANSWER),
+		 'admin' ,
+		#{content},
+		SYSDATE,
+		'admin' ,
+		#{questionNumber}
+		)
+	</insert>	
+	<insert id="insertAnswer2Cr4"
+										parameterType="answerVO"		>	
+			INSERT INTO ANSWER(
+		ANSWERNUMBER,
+		WRITER,
+		CONTENT,
+		CALENDAR,
+		MEMBERID,
+		QUESTIONNUMBER)
+		VALUES(
+		(SELECT
+		NVL(MAX(ANSWERNUMBER),0)+1 FROM ANSWER),
+		 'admin' ,
+		#{content},
+		SYSDATE,
+		#{memberId} ,
+		#{questionNumber}
+		)
+	</insert>
+	
+	<insert id="insertAnswer3Cr4"
+										parameterType="answerVO"		>	
+			INSERT INTO ANSWER(
+		ANSWERNUMBER,
+		WRITER,
+		CONTENT,
+		CALENDAR,
+		MEMBERID,
+		QUESTIONNUMBER)
+		VALUES(
+		(SELECT
+		NVL(MAX(ANSWERNUMBER),0)+1 FROM ANSWER),
+		 'admin' ,
+		#{content},
+		SYSDATE,
+		'admin' ,
+		#{questionNumber}
+		)
+	</insert>
+
+		<!-- 답변전체조회 관리자 페이징-->
+	<select id="getSearchAnswerCr4" resultType="answerVO"
+								>
+				SELECT *
+		FROM (
+		SELECT ROWNUM RN, A.*
+		FROM (
+		SELECT * FROM ANSWER 
+		WHERE WRITER='admin'
+		) A
+		)
+		WHERE RN BETWEEN #{start} AND #{end}
+
+	
+	</select>
+	
+	
+		<!-- 총 게시글 갯수 출력 -->
+	<select id="countQuestion" resultType="int">
+		SELECT COUNT(*) FROM ANSWER
+		WHERE WRITER='admin'
+	</select>
+	
+<!-- 안쓸듯...	<select id="getSearchAnswer2Cr4" resultType="answerVO"
+								>
+		SELECT * FROM ANSWER
+	</select> -->
+	
+	<!-- 관리자 답변 한건 삭제 -->
+	<delete id="deleteAnswerCr4" parameterType="answerVO">	
+		DELETE FROM ANSWER
+		WHERE ANSWERNUMBER = #{answerNumber}
+	</delete>
+	
+</mapper>

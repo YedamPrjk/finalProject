@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.company.product.service.impl.ProductMapper">
+	
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE CATEGORY = #{category}
+		<if test="categoryList != null">
+		AND CATEGORY2 IN
+			 <foreach item="cate" collection="categoryList" open="(" separator="," close=")" >#{cate}</foreach>
+		</if>
+	</select>
+	
+	<select id="getSearchProduct" resultType="ProductVO"
+		parameterType="ProductVO">
+		SELECT B.* FROM(SELECT ROWNUM RN, A.* FROM(
+		<!-- start of query -->
+		SELECT
+		PRODUCTNUMBER
+		,CATEGORY
+		,CATEGORY2
+		,IMAGE
+		,T_IMAGE
+		,PRODUCTNAME
+		,OPTIONNAME
+		,OPTIONPRICE
+		,PRODUCTSTATE
+		,MEMBERID
+		FROM PRODUCT
+		WHERE CATEGORY = #{category}
+		<if test="categoryList != null">
+		AND CATEGORY2 IN
+			 <foreach item="cate" collection="categoryList" open="(" separator="," close=")" >#{cate}</foreach>
+		</if>
+		ORDER BY PRODUCTNUMBER
+		<!-- end of query -->
+		) A) B WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	<select id="getProduct" resultType="ProductVO"
+		parameterType="ProductVO">
+		SELECT
+		PRODUCTNUMBER
+		,CATEGORY
+		,CATEGORY2
+		,IMAGE
+		,T_IMAGE
+		,PRODUCTNAME
+		,OPTIONNAME
+		,OPTIONPRICE
+		,PRODUCTSTATE
+		,MEMBERID
+		FROM PRODUCT
+		WHERE PRODUCTNUMBER = #{productNumber}
+	</select>
+	<!-- 장바구니 -->
+	<select id="cartGetProduct" resultType="ProductVO"
+		parameterType="ProductVO">
+		SELECT
+		CATEGORY,
+		PRODUCTNUMBER,
+		PRODUCTNAME
+		FROM PRODUCT
+		WHERE PRODUCTNUMBER IN
+		<foreach item='seq' collection='productNumberList' open='(' separator=',' close=')' >
+			 #{seq} 
+		</foreach>
+	</select>
+	<insert id="insertProduct" parameterType="ProductVO">
+		INSERT INTO
+		PRODUCT(
+		PRODUCTNUMBER
+		,CATEGORY
+		,CATEGORY2
+		,IMAGE
+		,T_IMAGE
+		,PRODUCTNAME
+		,OPTIONNAME
+		,OPTIONPRICE
+		,PRODUCTSTATE
+		,MEMBERID
+		) VALUES(
+		70 || pro_seq.nextval	
+		,#{category}
+		,#{category2}
+		,#{image}
+		,#{t_image}
+		,#{productName}
+		<foreach item="opname" collection="optionNameList" open=",'" separator="," close="'" >${opname}</foreach>
+		<foreach item="opprice" collection="optionPriceList" open=",'" separator="," close="'" >${opprice}</foreach>
+		,#{productState}
+		,#{memberId}
+		)
+	</insert>
+	<delete id="deleteProduct">
+		DELETE FROM PRODUCT
+		WHERE PRODUCTNUMBER = #{productNumber}
+	</delete>
+	<update id="updateProduct">
+		UPDATE PRODUCT
+			<set>				
+				<if test="category != null">,CATEGORY = #{category}</if>
+				<if test="category2 != null">,CATEGORY2 = #{category2}</if>
+				<if test="image != null">,IMAGE = #{image}</if>
+				<if test="t_image != null">,T_IMAGE = #{t_image}</if>
+				<if test="productName != null">,PRODUCTNAME = #{productName}</if>
+				<if test="optionName != null">,OPTIONNAME = #{optionName}</if>
+				<if test="optionPrice != null">,OPTIONPRICE = #{optionPrice}</if>
+				<if test="productState != null">,PRODUCTSTATE = #{productState}</if>
+				<if test="memberId != null">,MEMBERID = #{memberId}</if>
+			</set>
+		WHERE PRODUCTNUMBER = #{productNumber}
+	</update>
+	<!-- 홈화면 쇼핑몰 전체 리스트 -->
+	<select id="getSearchProduct99" resultType="ProductVO"
+		parameterType="ProductVO">
+		SELECT *
+		FROM PRODUCT
+	</select>
+</mapper>
+<!-- 스프링 초기설정 오류방지용 -->

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.cafe.service.impl.CafeMapper">
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*)
+		FROM CAFE
+	</select>
+	<!--  -->
+	<select id="getCountList1" resultType="int">
+	SELECT COUNT(*)
+	FROM GETSEARCHLIST1
+	</select>
+	<!-- 제품 등록 -->
+	<insert id="insertCafe">
+		INSERT INTO CAFE(
+		CAFENUMBER,
+		NAME,
+		OPTIONNAME,
+		PRICE,
+		LOCATION,
+		BUSINESSNUMBER,
+		IMAGE1,
+		IMAGE2
+		)VALUES(
+		(SELECT
+		NVL(MAX(SEQ),0)+1 FROM CAFE),
+		#{name},
+		#{optionName},
+		#{price},
+		#{location},
+		#{businessNumber},
+		#{image1},
+		#{image2}
+		)
+	</insert>
+	<!-- 제품 수정 -->
+	<!-- NAME,OPTIONNAME,PRICE,LOCATION,TIMAGE,IMAGE -->
+	<update id="updateCafe">
+		UPDATE CAFE
+		<set></set>
+		<where></where>
+	</update>
+	<!-- 제품 삭제 -->
+	<delete id="deleteCafe">
+		DELETE FROM CAFE
+		<!-- 제품번호 -->
+		WHERE SEQ = #{cafeNumber}
+	</delete>
+	<!-- 상세 리스트 -->
+	<select id="getCafe" resultType="cafeVO">
+		SELECT
+		SEQ,
+		NAME,
+		OPTIONNAME,
+		PRICE,
+		LOCATION,
+		IMAGE1,
+		IMAGE2
+		FROM CAFE
+		<where>SEQ = #{cafeNumber}
+		</where>
+	</select>
+	<!-- 전체 리스트 -->
+	<select id="getSearchCafe" resultType="cafeVO">
+		SELECT B.* FROM(SELECT ROWNUM RN, A.* FROM(
+		<!-- start of query -->
+		SELECT
+			SEQ,
+			NAME,
+			OPTIONNAME,
+			PRICE,
+			LOCATION,
+			IMAGE1,
+			IMAGE2
+		FROM CAFE
+			<include refid="search"></include>
+		ORDER BY CAFENUMBER
+		<!-- end of query -->
+		) A) B WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	<!--  -->
+	<select id="getSearchList1" resultType="cafeVO">
+	SELECT B.* FROM(SELECT ROWNUM RN, A.* FROM(
+		<!-- start of query -->
+			select * from getsearchlist1
+			
+		<include refid="search"></include>
+	ORDER BY LOCATION
+	<!-- end of query -->
+	) A) B WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	<!-- 검색기능 -->
+	<sql id="search">
+		<where>
+				<!-- 전체 -->
+				<if test="search == 'all'">
+					(NAME LIKE '%' || #{searchValue} || '%'
+					OR PRICE LIKE '%' || #{searchValue} || '%'
+					OR LOCATION LIKE '%' || #{searchValue} || '%')
+				</if>
+				<!-- 전체가 아닌 경우 -->
+				<if test="search != 'all' and search != null and search != ''">
+					AND ${search} LIKE '%' || #{searchValue} || '%'
+				</if>
+				<!-- 지역구분 채크박스 -->
+				<if test="searchLocation != null">
+					AND 
+					 <foreach item="cate" index = "idx" collection="searchLocation" open="(" separator="" close=")" >
+					 	<if test="idx > 0">
+							OR 
+						</if>
+						LOCATION LIKE '%' ||  #{cate}  || '%' 
+				  	</foreach>
+				</if>
+				<!-- 카테고리 3개 분류 -->
+				<if test="category1 != null and category1 != '' ">
+				AND  CATEGORY1 = #{category1}
+				</if>
+				<!-- 카테고리 없을 때 메뉴로 가게 -->
+				<if test="category1 == null or category1 == ''">
+				AND
+					<if test="menu == 1">
+						category1 in ('cafe','hotel','taxi')
+					</if>
+					<if test="menu == 2">
+						category1 in ('beauty','edu')
+					</if>
+				</if>
+		</where>
+	</sql>
+	<!-- adminView 전체조회 -->
+	<select id="adminView" parameterType="cafeVO" resultType="cafeVO">
+		SELECT 
+			*
+		FROM adminView
+		ORDER BY seq DESC
+	</select>
+	
+	<select id="getAdminView" parameterType="cafeVO" resultType="cafeVO">
+		SELECT 
+			*
+		FROM adminView
+		ORDER BY seq DESC
+		WHERE CODE = #{code}
+	</select>
+</mapper>
